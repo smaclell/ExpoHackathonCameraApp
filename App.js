@@ -48,6 +48,17 @@ export default function App() {
     setPreview(photo);
   };
 
+  const [type, setType] = useState(Camera.Constants.Type.front);
+
+  const flip = () => {
+    if (type === Camera.Constants.Type.front) {
+      setType(Camera.Constants.Type.back);
+    } else {
+      setType(Camera.Constants.Type.front);
+    }
+  };
+
+
   return (
     <View style={styles.container}>
       { preview ?
@@ -60,10 +71,13 @@ export default function App() {
               </View>
           </ImageBackground>
         ): (
-        <Camera style={styles.camera} ref={r => camera = r}>
+        <Camera style={styles.camera} type={type} ref={r => camera = r}>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={takePicture}>
               <Text style={styles.buttonText}>Take a picture</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={flip}>
+              <Text style={styles.buttonText}>Flip</Text>
             </TouchableOpacity>
           </View>
         </Camera>
@@ -89,6 +103,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#000',
+    margin: 20,
   },
   buttonText: {
     color: '#fff',
