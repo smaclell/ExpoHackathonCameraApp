@@ -6,6 +6,9 @@ import React, { useState, useEffect } from 'react';
 import { Image, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 
 export default function App() {
+  /**
+   * @type {Camera}
+   */
   let camera;
 
   const [hasPermission, setPermission] = useState(false);
