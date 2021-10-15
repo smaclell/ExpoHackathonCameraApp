@@ -96,9 +96,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonContainer: {
-    flex: 1, // this is cool
+    flexDirection: "row",
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
+    width: '100%',
     backgroundColor: 'transparent',
   },
   button: {
@@ -112,5 +113,7 @@ const styles = StyleSheet.create({
   camera: {
     flex: 1,
     width: "100%",
+    justifyContent: 'flex-end',
+    flexDirection: 'column',
   },
 });
