@@ -2,13 +2,24 @@ import { StatusBar } from 'expo-status-bar';
 
 import { Camera } from 'expo-camera';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 
 export default function App() {
   let camera;
 
   const [hasPermission, setPermission] = useState(false);
+
+  const checkPermission = async () => {
+    const { status } = await Camera.getCameraPermissionsAsync();
+    if (status === 'granted') {
+      setPermission(true);
+    }
+  };
+
+  useEffect(() => {
+    checkPermission();
+  }, []);
 
   const getPermission = async () => {
     const { status } = await Camera.requestCameraPermissionsAsync();
