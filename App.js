@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Camera } from 'expo-camera';
 
 import React, { useState, useEffect } from 'react';
-import { Image, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 
 export default function App() {
   /**
@@ -51,7 +51,15 @@ export default function App() {
   return (
     <View style={styles.container}>
       { preview ?
-        <Image source={preview} /> : (
+        (
+          <ImageBackground source={preview} style={styles.camera}>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button} onPress={() => setPreview(null)}>
+                  <Text style={styles.buttonText}>Retake</Text>
+                </TouchableOpacity>
+              </View>
+          </ImageBackground>
+        ): (
         <Camera style={styles.camera} ref={r => camera = r}>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={takePicture}>
