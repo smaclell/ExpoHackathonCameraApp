@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Camera } from 'expo-camera';
 
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 
 export default function App() {
   let camera;
@@ -19,6 +19,8 @@ export default function App() {
     }
   };
 
+  const [preview, setPreview] = useState(null);
+
   const takePicture = async () => {
     if (!hasPermission) {
       return getPermission();
@@ -27,17 +29,23 @@ export default function App() {
     if (!camera) {
       return;
     }
+
+    const photo = await camera.takePictureAsync();
+    setPreview(photo);
   };
 
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera} ref={r => camera = r}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={takePicture}>
-            <Text style={styles.buttonText}>Take a picture</Text>
-          </TouchableOpacity>
-        </View>
-      </Camera>
+      { preview ?
+        <Image source={preview} /> : (
+        <Camera style={styles.camera} ref={r => camera = r}>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={takePicture}>
+              <Text style={styles.buttonText}>Take a picture</Text>
+            </TouchableOpacity>
+          </View>
+        </Camera>
+      )}
       <StatusBar style="auto" />
 
     </View>
